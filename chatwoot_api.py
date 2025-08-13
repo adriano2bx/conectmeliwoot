@@ -12,6 +12,13 @@ def get_multipart_headers():
 def get_base_url():
     return f"{config.CHATWOOT_URL}/api/v1/accounts/{config.CHATWOOT_ACCOUNT_ID}"
 
+def verify_connection():
+    """Faz uma chamada simples à API para verificar a conexão e as credenciais."""
+    url = f"{get_base_url()}/profile"
+    response = requests.get(url, headers=get_headers())
+    response.raise_for_status()
+    return response.json()
+
 def create_api_inbox(name, webhook_url):
     url = f"{get_base_url()}/inboxes"
     payload = {"name": name, "channel": {"type": "api", "webhook_url": webhook_url}}
