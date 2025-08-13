@@ -4,6 +4,7 @@ import db_manager
 
 class AppConfig:
     def __init__(self):
+        self.is_configured = False
         self.reload()
 
     def reload(self):
@@ -22,9 +23,12 @@ class AppConfig:
             self.CHATWOOT_MESSAGES_INBOX_ID = db_manager.get_setting("CHATWOOT_MESSAGES_INBOX_ID")
             self.CHATWOOT_WEBHOOK_SECRET = db_manager.get_setting("CHATWOOT_WEBHOOK_SECRET")
             self.REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
+
+            if self.MELI_APP_ID:
+                self.is_configured = True
         except Exception as e:
             print(f"AVISO: Não foi possível carregar as configurações do banco de dados: {e}")
-            print("Isso é normal durante o processo de setup inicial.")
+            self.is_configured = False
 
 config = AppConfig()
 
