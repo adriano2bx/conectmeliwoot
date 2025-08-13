@@ -18,12 +18,25 @@ def index():
 
 @app.route('/save_config', methods=['POST'])
 def save_config():
+    # 1. Salva todas as configurações do formulário no DB
     for key, value in request.form.items():
         db_manager.update_setting(key.upper(), value)
     
+    # 2. Recarrega a config para usar os valores salvos
     from config import config
     config.reload()
 
+    # 3. Valida a conexão com o Chatwoot ANTES de prosseguir
+    try:
+        print("Validando conexão com a API do Chatwoot...")
+        chatwoot_api.verify_connection()
+        print("✅ Conexão com o Chatwoot validada com sucesso.")
+    except Exception as e:
+        error_message = "Não foi possível conectar à API do Chatwoot. Verifique se a 'URL do Chatwoot' e o 'Token de Acesso (Admin)' estão corretos."
+        detailed_error = f"Detalhes do erro: {e}"
+        return render_template('error.html', error_message=error_message, detailed_error=detailed_error)
+
+    # 4. Se a validação passou, continua com a criação de inboxes e webhooks
     try:
         webhook_url = f"{request.form['APP_URI_WEBHOOK']}/webhook"
         q_inbox = chatwoot_api.create_api_inbox("Mercado Livre - Perguntas", webhook_url)
@@ -34,10 +47,14 @@ def save_config():
         db_manager.update_setting('CHATWOOT_MESSAGES_INBOX_ID', str(m_inbox['id']))
         db_manager.update_setting('CHATWOOT_WEBHOOK_SECRET', webhook['payload']['hmac_token'])
     except Exception as e:
-        return f"<h1>Erro ao configurar o Chatwoot</h1><p>{e}</p>", 500
+        error_message = "A conexão com o Chatwoot foi bem-sucedida, mas ocorreu um erro ao criar as caixas de entrada ou o webhook."
+        detailed_error = f"Detalhes do erro: {e}"
+        return render_template('error.html', error_message=error_message, detailed_error=detailed_error)
 
+    # 5. Constrói a URL de autorização e redireciona o usuário
     auth_url = f"https://auth.mercadolibre.com/authorization?response_type=code&client_id={config.MELI_APP_ID}&redirect_uri={config.REDIRECT_URI}"
     return redirect(auth_url)
+
 
 @app.route('/callback')
 def callback():
@@ -70,4 +87,3 @@ if __name__ == '__main__':
     db_manager.initialize_db()
     threading.Thread(target=shutdown_server, daemon=True).start()
     app.run(host='0.0.0.0', port=8080)
-
