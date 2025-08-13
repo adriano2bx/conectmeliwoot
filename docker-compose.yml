@@ -9,9 +9,11 @@ services:
       - .env
     restart: always
     ports:
-      - "80:5000"
-      - "8080:8080"
+      - "80:5000"   # Porta para o webhook da aplicação principal
+      - "8080:8080" # Porta para o instalador web
     volumes:
+      # No EasyPanel, a configuração de volume é feita pela interface gráfica.
+      # Esta linha é para referência de desenvolvimento local.
       - meli-chatwoot-data:/app
 
 volumes:
