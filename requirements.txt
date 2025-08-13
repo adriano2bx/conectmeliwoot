@@ -1,0 +1,9 @@
+# requirements.txt
+requests
+python-dotenv
+schedule
+Flask
+gunicorn
+psycopg2-binary
+redis
+rq
