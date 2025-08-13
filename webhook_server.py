@@ -27,9 +27,10 @@ def verify_signature(payload_body, signature_header):
     digest = hmac.new(secret, msg=payload_body, digestmod=hashlib.sha256).hexdigest()
     return hmac.compare_digest(digest, signature)
 
-@app.before_first_request
-def initialize():
-    config.reload()
+@app.before_request
+def before_request_func():
+    if not config.is_configured:
+        config.reload()
 
 @app.route('/webhook', methods=['POST'])
 def chatwoot_webhook():
