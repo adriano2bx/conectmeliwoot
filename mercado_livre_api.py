@@ -91,3 +91,4 @@ def send_post_sale_attachment(pack_id, file_content, filename):
     response = requests.post(url, headers=auth_header_only, files=files, timeout=45)
     response.raise_for_status()
     return response.json()
+
