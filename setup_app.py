@@ -36,22 +36,7 @@ def save_config():
         detailed_error = f"Detalhes do erro: {e}"
         return render_template('error.html', error_message=error_message, detailed_error=detailed_error)
 
-    # 4. Se a validação passou, continua com a criação de inboxes e webhooks
-    try:
-        webhook_url = f"{request.form['APP_URI_WEBHOOK']}/webhook"
-        q_inbox = chatwoot_api.create_api_inbox("Mercado Livre - Perguntas", webhook_url)
-        m_inbox = chatwoot_api.create_api_inbox("Mercado Livre - Vendas", webhook_url)
-        webhook = chatwoot_api.create_webhook(webhook_url)
-        
-        db_manager.update_setting('CHATWOOT_QUESTIONS_INBOX_ID', str(q_inbox['id']))
-        db_manager.update_setting('CHATWOOT_MESSAGES_INBOX_ID', str(m_inbox['id']))
-        db_manager.update_setting('CHATWOOT_WEBHOOK_SECRET', webhook['payload']['hmac_token'])
-    except Exception as e:
-        error_message = "A conexão com o Chatwoot foi bem-sucedida, mas ocorreu um erro ao criar as caixas de entrada ou o webhook."
-        detailed_error = f"Detalhes do erro: {e}"
-        return render_template('error.html', error_message=error_message, detailed_error=detailed_error)
-
-    # 5. Constrói a URL de autorização e redireciona o usuário
+    # 4. Constrói a URL de autorização e redireciona o usuário
     auth_url = f"https://auth.mercadolibre.com/authorization?response_type=code&client_id={config.MELI_APP_ID}&redirect_uri={config.REDIRECT_URI}"
     return redirect(auth_url)
 
