@@ -29,6 +29,8 @@ def verify_signature(payload_body, signature_header):
 
 @app.before_request
 def before_request_func():
+    # Esta função garante que a configuração seja carregada na primeira requisição
+    # em um ambiente de produção com múltiplos workers (gunicorn).
     if not config.is_configured:
         config.reload()
 
@@ -37,7 +39,8 @@ def chatwoot_webhook():
     if not config.is_configured:
         return {'status': 'unconfigured'}, 503
     
-    if config.CHATWOOT_WEBHOOK_SECRET and not verify_signature(request.data, request.headers.get('X-Chatwoot-Hmac-Sha256')):
+    # Reativando a verificação de segurança, pois o setup agora a configura.
+    if not verify_signature(request.data, request.headers.get('X-Chatwoot-Hmac-Sha256')):
         print("ALERTA DE SEGURANÇA: Assinatura HMAC inválida.")
         abort(401)
 
