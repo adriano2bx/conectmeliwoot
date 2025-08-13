@@ -12,4 +12,3 @@ if __name__ == '__main__':
         print("Iniciando Worker do Redis...")
         worker = Worker(map(Queue, listen))
         worker.work()
-
