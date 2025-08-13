@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-g">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalação - Integração Chatwoot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-2xl p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <h1 class="text-2xl font-bold text-center text-gray-800">Configuração da Integração</h1>
+        <p class="text-center text-gray-600">Preencha todos os campos para configurar a aplicação.</p>
+        
+        <form action="/save_config" method="POST" class="space-y-4">
+            <!-- Seção Chatwoot -->
+            <div>
+                <h2 class="text-lg font-semibold border-b pb-2 mb-4">Chatwoot</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="chatwoot_url" class="block text-sm font-medium text-gray-700">URL do Chatwoot</label>
+                        <input type="text" name="chatwoot_url" id="chatwoot_url" placeholder="https://chat.seusite.com.br" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                    </div>
+                    <div>
+                        <label for="chatwoot_account_id" class="block text-sm font-medium text-gray-700">ID da Conta</label>
+                        <input type="text" name="chatwoot_account_id" id="chatwoot_account_id" value="1" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label for="chatwoot_api_token" class="block text-sm font-medium text-gray-700">Token de Acesso (Admin)</label>
+                    <input type="password" name="chatwoot_api_token" id="chatwoot_api_token" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+            </div>
+
+            <!-- Seção Mercado Livre -->
+            <div>
+                <h2 class="text-lg font-semibold border-b pb-2 mb-4">Mercado Livre</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="meli_app_id" class="block text-sm font-medium text-gray-700">App ID</label>
+                        <input type="text" name="meli_app_id" id="meli_app_id" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                    </div>
+                    <div>
+                        <label for="meli_user_id" class="block text-sm font-medium text-gray-700">User ID (Vendedor)</label>
+                        <input type="text" name="meli_user_id" id="meli_user_id" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label for="meli_secret_key" class="block text-sm font-medium text-gray-700">Secret Key</label>
+                    <input type="password" name="meli_secret_key" id="meli_secret_key" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+            </div>
+
+            <!-- Seção Aplicação -->
+            <div>
+                <h2 class="text-lg font-semibold border-b pb-2 mb-4">Configuração da Aplicação</h2>
+                <div>
+                    <label for="redirect_uri" class="block text-sm font-medium text-gray-700">URI de Redirect (para o Setup)</label>
+                    <input type="text" name="redirect_uri" id="redirect_uri" placeholder="http://SEU_IP_OU_DOMINIO:8080/callback" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                    <p class="mt-1 text-xs text-gray-500">Esta URL deve estar cadastrada na sua aplicação do Mercado Livre.</p>
+                </div>
+                <div class="mt-4">
+                    <label for="app_uri_webhook" class="block text-sm font-medium text-gray-700">URL Pública Final da Aplicação (para Webhooks)</label>
+                    <input type="text" name="app_uri_webhook" id="app_uri_webhook" placeholder="https://sua-integracao.com.br" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Salvar e Autorizar no Mercado Livre
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
