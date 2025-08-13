@@ -5,6 +5,8 @@ import psycopg2
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 def get_db_connection():
+    if not DATABASE_URL:
+        raise ValueError("A variável de ambiente DATABASE_URL não está definida.")
     return psycopg2.connect(DATABASE_URL)
 
 def initialize_db():
@@ -49,3 +51,4 @@ def mark_item_as_processed(item_id):
     conn.commit()
     cursor.close()
     conn.close()
+
