@@ -4,15 +4,14 @@ version: '3.8'
 services:
   app:
     build: .
-    command: /app/entrypoint.sh # Usa o script de entrada para decidir o que rodar
-    env_file: .env
+    command: /app/entrypoint.sh
+    env_file:
+      - .env
     restart: always
     ports:
-      - "80:5000"   # Porta para o webhook da aplicação principal
-      - "8080:8080" # Porta para o instalador web
+      - "80:5000"
+      - "8080:8080"
     volumes:
-      # Este é um exemplo de como configurar o volume diretamente no compose
-      # No EasyPanel, a configuração é feita pela interface gráfica.
       - meli-chatwoot-data:/app
 
 volumes:
