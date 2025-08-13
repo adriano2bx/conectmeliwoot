@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-g">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalação Concluída</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-lg p-8 text-center bg-white rounded-lg shadow-md">
+        <svg class="mx-auto h-12 w-12 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h1 class="mt-4 text-2xl font-bold text-gray-800">Instalação Concluída com Sucesso!</h1>
+        <p class="mt-2 text-gray-600">Todas as suas configurações foram salvas no banco de dados.</p>
+        <div class="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700">
+            <h2 class="font-bold">Ação Final Necessária</h2>
+            <p>Volte ao seu painel do EasyPanel, edite as variáveis de ambiente e mude o valor de <code class="bg-yellow-200 px-1 rounded">APP_MODE</code> de <code class="bg-yellow-200 px-1 rounded">SETUP</code> para <code class="bg-yellow-200 px-1 rounded">RUN</code>, e então faça o redeploy da aplicação.</p>
+        </div>
+    </div>
+</body>
+</html>
