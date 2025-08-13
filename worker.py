@@ -14,9 +14,10 @@ redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379')
 conn = redis.from_url(redis_url)
 
 if __name__ == '__main__':
-    # Cria uma instância do Worker, passando a conexão e as filas.
-    # O 'with Connection(conn):' não é mais necessário nesta versão da biblioteca.
+    # Cria uma lista de objetos Queue, passando a conexão para cada um.
+    queues = [Queue(name, connection=conn) for name in listen]
+    
+    # Cria uma instância do Worker, passando a lista de Queues e a conexão.
     print("Iniciando Worker do Redis...")
-    worker = Worker(map(Queue, listen), connection=conn)
+    worker = Worker(queues, connection=conn)
     worker.work()
-
