@@ -1,5 +1,18 @@
 # .gitignore
+
+# Arquivos de segredos e configuração local
 .env
+
+# Arquivos de estado da aplicação (gerenciados pelo volume Docker em produção)
+meli_tokens.db
+processed_questions.txt
+processed_messages.txt
+answered_questions.txt
+
+# Arquivos e pastas de ambiente virtual e cache do Python
+venv/
 __pycache__/
 *.pyc
+
+# Arquivos de sistema operacional
 .DS_Store
